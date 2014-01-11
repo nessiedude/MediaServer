@@ -1,0 +1,15 @@
+<h1>Listing tracks</h1>
+<%= link_to 'New track', new_track_path %>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Location</th>
+  </tr>
+ 
+  <% @tracks.each do |track| %>
+    <tr>
+      <td><%= track.title %></td>
+      <td><%= track.location %></td>
+    </tr>
+  <% end %>
+</table>

@@ -13,6 +13,10 @@ class TracksController < ApplicationController
 		@track = Track.find(params[:id])
 	end
 	
+	def index
+		@tracks = Track.all
+	end
+	
 	private
 	def track_params
 		params.require(:track).permit(:title, :location)
