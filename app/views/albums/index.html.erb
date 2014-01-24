@@ -1,0 +1,19 @@
+<h1>Albums</h1>
+
+<%= link_to 'New Album', new_album_path %>
+<table>
+	<th>Id</th>
+	<th>Title</th>
+	<th>Artist</th>
+<% @albums.each do |album| %>
+	<tr>
+	<td><%= album.id %></td>
+	<td><%= album.title %></td>
+	<td><%= album.artist.name %></td>
+	</tr>
+<% end %>
+
+</table>
+
+<p><%= link_to 'Artists', artists_path %></p>
+<p><%= link_to 'Tracks', tracks_path %></p>

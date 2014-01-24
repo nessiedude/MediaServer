@@ -1,0 +1,24 @@
+<%= form_for @album do |f| %>
+	<% if @album.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@album.errors.count, "error") %> prohibited this album from being saved:</h2>
+			<ul>
+			<% @album.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+			</ul>
+	<% end %>
+	<p>
+		<%= f.label :title %><br/>
+		<%= f.text_field :title %><br/>
+	</p>
+	
+	<p>
+		<%= f.label :artist_id %>
+		<%= f.select :artist_id, options_for_select(@artists.sort{|a,b|a.name <=> b.name}.map{|artist| [artist.name, artist.id]}) %>
+	</p>
+	
+	<p>
+		<%= f.submit %>
+	</p>
+<% end %>
