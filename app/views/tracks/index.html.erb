@@ -2,14 +2,22 @@
 <%= link_to 'New track', new_track_path %>
 <table>
   <tr>
+	<th>ID</th>
     <th>Title</th>
     <th>Location</th>
+	<th></th>
+	<th></th>
+	<th></th>
   </tr>
  
   <% @tracks.each do |track| %>
     <tr>
+      <td><%= track.id %></td>
       <td><%= track.title %></td>
       <td><%= track.location %></td>
+	  <td><%= link_to 'Show', track %></td>
+	  <td><%= link_to 'Edit', edit_track_path(track) %></td>
+	  <td><%= link_to 'Delete', track_path(track), method: :delete, data: { confirm: "Are you sure?" } %></td>
     </tr>
   <% end %>
 </table>
