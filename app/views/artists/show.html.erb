@@ -1,0 +1,13 @@
+<p>
+	<strong>Name:</strong>
+	<%= @artist.name %>
+</p>
+
+<p>
+	<strong>Albums:</strong>
+	<% @artist.albums.each {|album| %>
+		<%= album.title %><br/>
+	<% } %>
+</p>
+
+<%= link_to 'Back', artists_path %>

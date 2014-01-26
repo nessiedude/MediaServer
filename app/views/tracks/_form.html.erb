@@ -19,6 +19,11 @@
 	</p>
 	
 	<p>
+		<%= f.label :album_id %><br/>
+		<%= f.select :album_id, options_for_select(Album.options_for_select, @track.album_id)%><br/>
+	</p>
+	
+	<p>
 		<%= f.submit %>
 	</p>
 <% end %>

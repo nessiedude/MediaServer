@@ -15,7 +15,7 @@
 	
 	<p>
 		<%= f.label :artist_id %>
-		<%= f.select :artist_id, options_for_select(@artists.sort{|a,b|a.name <=> b.name}.map{|artist| [artist.name, artist.id]}) %>
+		<%= f.select :artist_id, options_for_select(Artist.options_for_select, @album.artist_id) %>
 	</p>
 	
 	<p>

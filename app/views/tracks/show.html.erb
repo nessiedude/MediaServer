@@ -8,4 +8,11 @@
 	<%= @track.location %>
 </p>
 
+<p>
+	<strong>Album:</strong>
+	<%= @track.album.nil? ? "Undefined" : @track.album.title %>
+</p>
+
+
+
 <%= link_to 'Back', tracks_path %>

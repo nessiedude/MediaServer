@@ -4,12 +4,18 @@
 <table>
 	<th>Id</th>
 	<th>Title</th>
-	<th>Artist</th>
+	<th></th>
+	<th></th>
+	<th></th>
+	<!--<th>Artist</th>-->
 <% @albums.each do |album| %>
 	<tr>
 	<td><%= album.id %></td>
 	<td><%= album.title %></td>
-	<td><%= album.artist.name %></td>
+	<td><%= link_to "Show", album %></td>
+	<td><%= link_to "Edit", edit_album_path(album) %></td>
+	<td><%= link_to "Delete", album_path(album), method: :delete %></td>
+	<!--<td><%= album.artist.nil? ? "Undefined" : album.artist.name %></td>-->
 	</tr>
 <% end %>
 

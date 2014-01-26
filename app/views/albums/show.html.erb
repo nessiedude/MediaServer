@@ -1,0 +1,18 @@
+<p>
+	<strong>Title:</strong>
+	<%= @album.title %>
+</p>
+
+<p>
+	<strong>Artist:</strong>
+	<%= @album.artist.nil? ? "Undefined" : @album.artist.name %>
+</p>
+
+<p>
+	<strong>Tracks:</strong>
+	<% @album.tracks.each {|track| %>
+		<%= album.track %><br/>
+	<% } %>
+</p>
+
+<%= link_to 'Back', albums_path %>

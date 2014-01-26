@@ -1,22 +1,28 @@
 <h1>Artists</h1>
 
-<%= link_to 'New Artist', new_artist_path %>
+<%= link_to "New Artist", new_artist_path %>
 <table>
 	<th>Id</th>
 	<th>Name</th>
-	<th>Albums</th>
+	<th></th>
+	<th></th>
+	<th></th>
+	<!--<th>Albums</th>-->
 <% @artists.each do |artist| %>
 	<tr>
 	<td><%= artist.id %></td>
 	<td><%= artist.name %></td>
-	<td><% artist.albums.each {|album| %>
+	<td><%= link_to "Show", artist %></td>
+	<td><%= link_to "Edit", edit_artist_path(artist) %></td>
+	<td><%= link_to "Delete", artist_path(artist), method: :delete %></td>
+	<!--<td><% artist.albums.each {|album| %>
 	<p><%= album.title %></p>
 	<% } %>
-	</td>
+	</td>-->
 	</tr>
 <% end %>
 
 </table>
 
-<p><%= link_to 'Albums', albums_path %></p>
-<p><%= link_to 'Tracks', tracks_path %></p>
+<p><%= link_to "Albums", albums_path %></p>
+<p><%= link_to "Tracks", tracks_path %></p>
