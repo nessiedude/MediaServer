@@ -1,3 +1,5 @@
+require 'taglib'
+
 class TracksController < ApplicationController
 
 	def new
@@ -43,6 +45,7 @@ class TracksController < ApplicationController
 	end
 	
 	private
+
 	def track_params
 		params.require(:track).permit(:title, :location, :album_id)
 	end

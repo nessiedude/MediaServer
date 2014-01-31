@@ -5,7 +5,7 @@
 <% else %>
 	<% @locations.each{|location| %>
 		<%= location.location %>
-		<%= link_to 'Remove', location_path(location), method: :delete, data: { confirm: "Are you sure?" } %><br/>
+		<%= link_to 'Remove', locations_path(location), method: :delete, data: { confirm: "Are you sure?" } %><br/>
 	<% } %>
 <% end %>
 <br/>
