@@ -9,18 +9,23 @@
 			</ul>
 	<% end %>
 	<p>
+		<%= f.label :location %>: <%= @track.location %>
+	</p>
+	<p>
+		<%= f.label :track_no %><br/>
+		<%= f.number_field :track_no %><br/>
+	</p>
+	<p>
 		<%= f.label :title %><br/>
 		<%= f.text_field :title %><br/>
-	</p>
-	
-	<p>
-		<%= f.label :location %><br/>
-		<%= f.text_field :location %><br/>
-	</p>
-	
+	</p>	
 	<p>
 		<%= f.label :album_id %><br/>
 		<%= f.select :album_id, options_for_select(Album.options_for_select, @track.album_id)%><br/>
+	</p>	
+	<p>
+		<%= f.label :artist_id %><br/>
+		<%= f.select :artist_id, options_for_select(Artist.options_for_select, @track.artist_id)%><br/>
 	</p>
 	
 	<p>

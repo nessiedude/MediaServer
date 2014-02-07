@@ -1,5 +1,6 @@
 class Artist < ActiveRecord::Base
 	has_many :albums
+	has_many :tracks
 	
 	def self.options_for_select
 		artists = self.all

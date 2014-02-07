@@ -1,4 +1,9 @@
 <p>
+	<strong>Track No.:</strong>
+	<%= @track.track_no %>
+</p>
+
+<p>
 	<strong>Title:</strong>
 	<%= @track.title %>
 </p>
@@ -11,6 +16,11 @@
 <p>
 	<strong>Album:</strong>
 	<%= @track.album.nil? ? "Undefined" : @track.album.title %>
+</p>
+
+<p>
+	<strong>Artist:</strong>
+	<%= @track.artist.nil? ? "Undefined" : @track.artist.name %>
 </p>
 
 

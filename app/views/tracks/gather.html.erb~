@@ -1,7 +1,0 @@
-<%= @root %>
-<br/>
-<%= @files.count %>
-<br/>
-<% @files.each{|file| %>
-	<%= file %><br/>
-<% } %>

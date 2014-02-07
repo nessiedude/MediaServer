@@ -1,7 +1,0 @@
-class MusicController < ApplicationController
-  def home
-	@artists = Artist.all
-	@locations = Locations.all
-	@new_location = Locations.new
-  end
-end
