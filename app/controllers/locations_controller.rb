@@ -12,10 +12,11 @@ class LocationsController < ApplicationController
 	
 	def destroy
 		@location = Location.find(params[:id])
-		@location.destroy
 		
 		files_controller = FilesController.new
 		files_controller.discard(@location)
+		
+		@location.destroy
 		
 		redirect_to root_path
 	end
