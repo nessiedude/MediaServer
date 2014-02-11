@@ -62,7 +62,7 @@ class FilesController# < ApplicationController
 						new_albums.push album
 					end
 					
-					new_tracks.push({:title => title, :location => file, :album => album, :root_id => location, :track_no => trackNo, :artist => artist})
+					new_tracks.push({:title => title, :location => file, :album => album, :root_id => location.id, :track_no => trackNo, :artist => artist})
 				end
 			end
 		end
@@ -89,6 +89,24 @@ class FilesController# < ApplicationController
 	def discard(location)
 		Track.transaction do
 			Track.where(:root_id => location.id).destroy_all
+		end
+		
+		Album.transaction do
+			albums = Album.includes(:tracks)
+			albums.each do |album|
+				if (album.tracks.length == 0) then
+					album.destroy
+				end
+			end
+		end
+		
+		Artist.transaction do
+			artists = Artist.includes(:tracks,:albums)
+			artists.each do |artist|
+				if (artist.tracks.length == 0 && artist.albums.length == 0) then
+					artist.destroy
+				end
+			end
 		end
 	end
 	
