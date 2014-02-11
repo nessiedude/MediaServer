@@ -37,6 +37,9 @@ class FilesController# < ApplicationController
 		}
 		
 		new_tracks = []
+		new_albums = []
+		new_artists = []
+		
 		files.each do |file|
 			TagLib::FileRef.open(file) do |fileref|
 				unless fileref.null?
@@ -45,16 +48,34 @@ class FilesController# < ApplicationController
 					title = fileref.tag.title
 					trackNo = fileref.tag.track
 					
-					artist = get_artist artistName
+					artist, existingArtist = get_artist artistName
+					
+					if (!existingArtist && !artist.nil?) then
+						new_artists.push artist
+					end
 					
 					album, existingAlbum = get_album albumTitle, artist
 					
 					if (existingAlbum && !albums_to_update.include?(album)) then
 						albums_to_update.push(album)
+					elsif (!existingAlbum && !album.nil?) then
+						new_albums.push album
 					end
 					
 					new_tracks.push({:title => title, :location => file, :album => album, :root_id => location, :track_no => trackNo, :artist => artist})
 				end
+			end
+		end
+		
+		Artist.transaction do
+			new_artists.each do |artist|
+				artist.save
+			end
+		end
+		
+		Album.transaction do
+			new_albums.each do |album|
+				album.save
 			end
 		end
 		
@@ -76,6 +97,7 @@ class FilesController# < ApplicationController
 	
 	def get_artist(artistName)
 		artist = nil
+		existing = false
 		
 		if (!artistName.nil? && artistName.strip != "") then
 			artistName.strip!
@@ -84,17 +106,18 @@ class FilesController# < ApplicationController
 			
 			if (artistIndex.nil?) then
 				artist = Artist.new({:name => artistName })
-				if (!artist.save) then
+				if (!artist.valid?) then
 					artist = nil
 				else
 					@artists.push(artist)
 				end
 			else
 				artist = @artists[artistIndex]
+				existing = true
 			end
 		end
 		
-		artist
+		[artist, existing]
 	end
 	
 	def get_album(albumTitle, artist)
@@ -108,7 +131,7 @@ class FilesController# < ApplicationController
 			
 			if (albumIndex.nil?) then
 				album = Album.new({:title => albumTitle, :artist => artist})
-				if (!album.save) then
+				if (!album.valid?) then
 					album = nil
 				else
 					@albums.push(album)
@@ -123,8 +146,8 @@ class FilesController# < ApplicationController
 	end
 	
 	def update_album_artist(albums_to_update)
-		various_artist = get_artist "Various"
-		unknown_artist = get_artist "Unknown"
+		various_artist, existing = get_artist "Various"
+		unknown_artist, existing = get_artist "Unknown"
 		update_albums = []
 		
 		albums_to_update.each do |album|
