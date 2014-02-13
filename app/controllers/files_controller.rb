@@ -62,6 +62,10 @@ class FilesController# < ApplicationController
 						new_albums.push album
 					end
 					
+					if (title.nil? || title.strip == "") then
+						title = File.basename(file,".*")
+					end
+					
 					new_tracks.push({:title => title, :location => file, :album => album, :root_id => location.id, :track_no => trackNo, :artist => artist})
 				end
 			end

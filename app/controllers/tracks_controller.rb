@@ -7,7 +7,7 @@ class TracksController < ApplicationController
 	end
 	
 	def index
-		@tracks = Track.all
+		@tracks = Track.all.order(:title)
 	end
 	
 	def edit

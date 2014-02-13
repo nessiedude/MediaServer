@@ -1,6 +1,7 @@
 class LocationsController < ApplicationController
 	def create
 		location = Location.new(location_params)
+		location.location.gsub! "\\", "/"
 		
 		if location.save then
 			files_controller = FilesController.new
