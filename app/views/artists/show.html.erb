@@ -10,4 +10,11 @@
 	<% } %>
 </p>
 
+<p>
+	<strong>Tracks:</strong>
+	<% @artist.tracks.each {|track| %>
+		<%= track.title %><br/>
+	<% } %>
+</p>
+
 <%= link_to 'Back', artists_path %>
