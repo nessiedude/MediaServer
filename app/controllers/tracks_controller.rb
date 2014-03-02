@@ -1,7 +1,10 @@
 require 'taglib'
 
 class TracksController < ApplicationController
-	
+	def stream
+		@track = Track.find(params[:id])
+		send_file @track.location, type: "audio/mpeg"
+	end	
 	def show
 		@track = Track.find(params[:id])
 	end

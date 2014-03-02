@@ -14,6 +14,7 @@ MediaServer::Application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
 	get 'tracks/gather' => 'tracks#gather'
+	get 'tracks/stream/:id' => 'tracks#stream', :as => :stream
   	resources :tracks, :only => [:show, :edit, :update, :index]
 	
 	resources :albums, :artists, :locations
