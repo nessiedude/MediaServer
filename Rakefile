@@ -4,3 +4,15 @@
 require File.expand_path('../config/application', __FILE__)
 
 MediaServer::Application.load_tasks
+
+task :server do
+  `bundle exec rails s -p 80 -d&`
+end
+
+desc 'stop rails'
+task :stop do
+    pid_file = 'tmp/pids/server.pid'
+    pid = File.read(pid_file).to_i
+    Process.kill 9, pid
+    File.delete pid_file
+end
