@@ -1,7 +1,11 @@
 class ArtistsController < ApplicationController
 
 	def index
+ start = Time.now
+     
 		@artists = Artist.all.order(:name)
+		
+		@duration = Time.now - start
 	end
 	
 	def new
