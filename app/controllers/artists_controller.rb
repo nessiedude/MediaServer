@@ -1,11 +1,8 @@
 class ArtistsController < ApplicationController
 
 	def index
- start = Time.now
-     
-		@artists = Artist.all.order(:name)
-		
-		@duration = Time.now - start
+		#@artists = Artist.all#.order(:name)
+		@artists = Artist.includes(:albums).where("albums.artist_id IS NOT NULL")
 	end
 	
 	def new
