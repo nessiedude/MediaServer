@@ -16,7 +16,8 @@ MediaServer::Application.routes.draw do
 	get 'tracks/gather' => 'tracks#gather'
 	get 'tracks/stream/:id' => 'tracks#stream', :as => :stream
   	resources :tracks, :only => [:show, :edit, :update, :index]
-	
+
+	get 'artists/data/:mode' => 'artists#data', :as => :artists_data
 	resources :albums, :artists, :locations
 
   # Example resource route with options:

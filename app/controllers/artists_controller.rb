@@ -1,10 +1,24 @@
 class ArtistsController < ApplicationController
 
 	def index
-		#@artists = Artist.all#.order(:name)
 		@artists = Artist.includes(:albums).where("albums.artist_id IS NOT NULL")
 	end
 	
+	def data
+		if (params[:mode] == "album") then
+			@artists = Artist.includes(:albums).where("albums.artist_id IS NOT NULL")
+		elsif (params[:mode] == "track") then
+			@artists = Artist.includes(:tracks).where("tracks.artist_id IS NOT NULL")
+		else
+			@artists = Artist.all
+		end
+		#render text: params[:mode]
+		#render action: "data.js.erb", layout: false, content_type: "text/javascript"
+		#render json: @artists
+
+		render :json => @artists.to_json(only: [:id, :name])
+	end
+
 	def new
 		@artist = Artist.new
 	end
