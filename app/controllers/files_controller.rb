@@ -171,6 +171,7 @@ class FilesController# < ApplicationController
 		various_artist, existing = get_artist "Various"
 		unknown_artist, existing = get_artist "Unknown"
 		update_albums = []
+		update_tracks = []
 		
 		albums_to_update.each do |album|
 			albumArtist = album.artist
@@ -200,10 +201,23 @@ class FilesController# < ApplicationController
 				album.artist = various_artist
 				update_albums.push album
 			end
+			
+			if (matching) then
+				album.tracks.each do |track|
+					if (track.artist.nil? || track.artist == unknown_artist) then
+						track.artist = album.artist
+						update_tracks.push track
+					end
+				end
+			end
 		end
 		
 		Album.transaction do
 			update_albums.each{|album| album.save}
+		end
+
+		Track.transaction do
+			update_tracks.each{|track| track.save}
 		end
 	end
 	@@unrecognisedFileExtensions = {}
