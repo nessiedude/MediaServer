@@ -16,3 +16,18 @@ task :stop do
     Process.kill 9, pid
     File.delete pid_file
 end
+
+desc 'add files location'
+task :add_location, [:new_location] do |t, args|
+    if (arts.add_location.nil?) then
+        return
+    end
+    
+    location = Location.new(location: new_location)
+	   	location.location.gsub! "\\", "/"
+		
+		if location.save then
+			files_controller = FilesController.new
+			files_controller.gather(location)
+		end
+end
