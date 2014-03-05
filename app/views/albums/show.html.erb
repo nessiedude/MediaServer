@@ -11,7 +11,7 @@
 <p>
 	<strong>Tracks:</strong>
 	<% @album.tracks.each {|track| %>
-		<%= track.title %><br/>
+		<%= link_to track.title,track %><br/>
 	<% } %>
 </p>
 
