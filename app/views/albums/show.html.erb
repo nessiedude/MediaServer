@@ -5,11 +5,11 @@
 
 <p>
 	<strong>Artist:</strong>
-	<%= @album.artist.nil? ? "Undefined" : @album.artist.name %>
+	<%= @album.artist.nil? ? "Undefined" : link_to(@album.artist.name,@album.artist) %>
 </p>
 
 <p>
-	<strong>Tracks:</strong>
+	<strong>Tracks:</strong><br/>
 	<% @album.tracks.each {|track| %>
 		<%= link_to track.title,track %><br/>
 	<% } %>

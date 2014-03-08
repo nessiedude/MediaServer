@@ -45,3 +45,5 @@ gem 'taglib-ruby', '>= 0.6.0'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'thin'

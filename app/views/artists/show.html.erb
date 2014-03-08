@@ -4,16 +4,16 @@
 </p>
 
 <p>
-	<strong>Albums:</strong>
+	<strong>Albums:</strong><br/>
 	<% @artist.albums.each {|album| %>
-		<%= album.title %><br/>
+		<%= link_to album.title,album %><br/>
 	<% } %>
 </p>
 
 <p>
-	<strong>Tracks:</strong>
+	<strong>Tracks:</strong><br/>
 	<% @artist.tracks.each {|track| %>
-		<%= track.title %><br/>
+		<%= link_to track.title,track %><br/>
 	<% } %>
 </p>
 
