@@ -18,7 +18,7 @@ MediaServer::Application.routes.draw do
   	resources :tracks, :only => [:show, :edit, :update, :index]
 
 	get 'artists/data/:mode' => 'artists#data', :as => :artists_data
-	resources :albums, :artists, :locations
+	resources :albums, :artists
 
   # Example resource route with options:
   #   resources :products do

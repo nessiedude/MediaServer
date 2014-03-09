@@ -20,15 +20,16 @@ end
 desc 'add files location'
 task :add_location, [:new_location] => [:environment] do |t, args|
     if (!args.new_location.nil?) then
-        
-    
-    
-    location = Location.new(location: args.new_location)
-	   	location.location.gsub! "\\", "/"
-		
-		if location.save then
-			files_controller = FilesController.new
-			files_controller.gather(location)
-		end
+		LocationsHelper.create(args.new_location)
+	end
+end
+
+task :display_locations => [:environment] do
+	LocationsHelper.display
+end
+
+task :remove_location, [:location_id] => [:environment] do |t,args|
+	if (!args.location_id.nil?) then
+		LocationsHelper.remove(args.location_id)
 	end
 end
