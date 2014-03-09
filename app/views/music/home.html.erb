@@ -1,20 +1,20 @@
-<h1>Hello, Rails</h1>
+<h1>Welcome to MusicPi</h1>
 <p><strong>Currently Monitoring</strong></p>
 <% if (@locations.count == 0) then %>
 	<p>No Locations</p>
 <% else %>
 	<% @locations.each{|location| %>
 		<%= location.location %>
-		<%= link_to 'Remove', location_path(location), method: :delete, data: { confirm: "Are you sure?" } %><br/>
+		<%#= link_to 'Remove', location_path(location), method: :delete, data: { confirm: "Are you sure?" } %><br/>
 	<% } %>
 <% end %>
 <br/>
-<%= form_for @new_location, url: locations_path do |f| %>
-	<%= f.label :location %>
-	<%= f.text_field :location %>
+<%#= form_for @new_location, url: locations_path do |f| %>
+	<%#= f.label :location %>
+	<%#= f.text_field :location %>
 	
-	<%= f.submit %>
-<% end %>
+	<%#= f.submit %>
+<%# end %>
 <br/>
 <%= link_to 'Artists', controller: "artists" %>
 <%= link_to 'Albums', controller: "albums" %>
