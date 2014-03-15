@@ -20,16 +20,16 @@ end
 desc 'add files location'
 task :add_location, [:new_location] => [:environment] do |t, args|
     if (!args.new_location.nil?) then
-		LocationsHelper.create(args.new_location)
+		LocationsController.create(args.new_location)
 	end
 end
 
 task :display_locations => [:environment] do
-	LocationsHelper.display
+	LocationsController.display
 end
 
 task :remove_location, [:location_id] => [:environment] do |t,args|
 	if (!args.location_id.nil?) then
-		LocationsHelper.remove(args.location_id)
+		LocationsController.remove(args.location_id)
 	end
 end
