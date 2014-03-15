@@ -1,12 +1,12 @@
 require 'taglib'
 
-class LocationsController
+class LocationsController < ApplicationController
 	def self.create(folder_location)
 		location = Location.new(location: folder_location)
 		location.location.gsub! "\\", "/"
 		
 		if location.save then
-			locations_helper = LocationsHelper.new
+			locations_helper = LocationsController.new
 			locations_helper.gather(location)
 		end
 	end
@@ -15,7 +15,7 @@ class LocationsController
 		location = Location.find(location_id)
 		
 		if (!location.nil?) then
-			locations_helper = LocationsHelper.new
+			locations_helper = LocationsController.new
 			locations_helper.discard(location)
 			location.destroy
 		end
