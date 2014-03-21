@@ -5,16 +5,26 @@ require File.expand_path('../config/application', __FILE__)
 
 MediaServer::Application.load_tasks
 
-task :server do
-  `bundle exec rails s -p 80 -d&`
+task :server,[:mode] do |t,args|
+	if (args.mode == "d") then
+		puts "Starting development server"
+		`bundle exec rails s -p 80 -d&`
+	elsif (args.mode == "p") then
+		puts "Starting production server"
+		`thin start -p 80 -e production -d`
+	end
 end
 
 desc 'stop rails'
-task :stop do
-    pid_file = 'tmp/pids/server.pid'
-    pid = File.read(pid_file).to_i
-    Process.kill 9, pid
-    File.delete pid_file
+task :stop, [:mode] do |t,args|
+	if (args.mode == "d") then
+		pid_file = 'tmp/pids/server.pid'
+		pid = File.read(pid_file).to_i
+		Process.kill 9, pid
+		File.delete pid_file
+	elsif (args.mode == "p") then
+		`thin stop`
+	end
 end
 
 desc 'add files location'
