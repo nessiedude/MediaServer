@@ -5,7 +5,6 @@
     <th>Title</th>
     <th>Location</th>
 	<th></th>
-	<th></th>
   </tr>
  
   <% @tracks.each do |track| %>
@@ -14,7 +13,6 @@
       <td><%= track.title %></td>
       <td><%= track.location %></td>
 	  <td><%= link_to 'Show', track %></td>
-	  <td><%= link_to 'Edit', edit_track_path(track) %></td>
     </tr>
   <% end %>
 </table>

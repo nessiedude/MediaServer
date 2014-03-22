@@ -1,0 +1,33 @@
+#musicplayer .button{
+	background-color:#FF0000;
+	width:10%;
+	height:10%;
+	float:left;
+}
+
+.clearfix:after { 
+   content: "."; 
+   visibility: hidden; 
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
+#musicplayer_progress, #musicplayer_progress div {
+	width:100%;
+	height:20px;
+	background-color:gray;
+	margin:0;
+	padding:0;
+	border:none;
+	position:relative;
+}
+div#musicplayer_complete{
+	width:0;
+	background-color:green;
+	float:left;
+}
+div#musicplayer_remaining{
+	background-color:red;
+	float:left;
+}

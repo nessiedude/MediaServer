@@ -1,3 +1,5 @@
+<div id='musicplayer'></div>
+
 <p>
 	<strong>Title:</strong>
 	<%= @album.title %>
@@ -15,4 +17,14 @@
 	<% } %>
 </p>
 
-<%= link_to 'Back', albums_path %>
+
+<%= link_to "Edit", edit_album_path(@album) %><br/>
+<%= link_to 'Artists', artists_path %><br/>
+<%= link_to 'Albums', albums_path %>
+
+<script>
+	var player = new MusicPlayer();
+	<% @album.tracks.each {|track| %>
+		player.addToPlaylist({title: "<%= track.title %>", src: "<%= stream_url track %>"});
+	<% } %>
+</script>
