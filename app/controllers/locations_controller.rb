@@ -74,6 +74,7 @@ class LocationsController < ApplicationController
 					albumTitle = fileref.tag.album
 					title = fileref.tag.title
 					trackNo = fileref.tag.track
+					duration = fileref.audio_properties.length
 					
 					artist, existingArtist = get_artist artistName
 					
@@ -93,7 +94,7 @@ class LocationsController < ApplicationController
 						title = File.basename(file,".*")
 					end
 					
-					new_tracks.push({:title => title, :location => file, :album => album, :root_id => location.id, :track_no => trackNo, :artist => artist})
+					new_tracks.push({:title => title, :location => file, :album => album, :root_id => location.id, :track_no => trackNo, :artist => artist, :duration => duration})
 				end
 			end
 		end

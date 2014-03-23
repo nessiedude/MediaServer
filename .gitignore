@@ -16,3 +16,6 @@
 /tmp
 
 *.exe
+
+# Ignore the temporary files created when editing in gedit/Kate
+*~

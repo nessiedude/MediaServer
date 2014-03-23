@@ -13,35 +13,42 @@ function MusicPlayer(){
 	this.initialise = function(){
 		if (isInitialised){return;}
 		
-		var container = document.getElementById(idString);
-		if (!container){return;}
+		var container = $("#" + idString);
+		if (!container || !window.jQuery){return;}
 		
-		container.innerHTML = "<div id='musicplayer_progress'><div id='musicplayer_complete'></div><div id='musicplayer_remaining'></div></div><div class='controls clearfix'><div class='button' id='musicplayer_sb'>SkipBackward</div><!--<div class='button' id='musicplayer_rw'>Rewind</div>--><div class='button' id='musicplayer_pp'>Play</div><!--<div class='button' id='musicplayer_ff'>FastForward</div>--><div class='button' id='musicplayer_sf'>SkipForward</div></div>";
+		container.append("<div id='musicplayer_progress'><div id='musicplayer_complete'></div><div id='musicplayer_remaining'></div></div><div class='controls clearfix'><div class='button' id='musicplayer_sb'>SkipBackward</div><!--<div class='button' id='musicplayer_rw'>Rewind</div>--><div class='button' id='musicplayer_pp'>Play</div><!--<div class='button' id='musicplayer_ff'>FastForward</div>--><div class='button' id='musicplayer_sf'>SkipForward</div></div>");
 	
 		audio = new Audio();
 		audio.controls = false;
-		container.appendChild(audio);
+		container.append(audio);
 		
-		timeCompleteDiv = document.getElementById(idString + "_complete");
-		timeRemainingDiv = document.getElementById(idString + "_remaining");
-		progressDiv = document.getElementById(idString + "_progress");
+		timeCompleteDiv = $("#" + idString + "_complete");
+		timeRemainingDiv = $("#" + idString + "_remaining");
+		progressDiv = $("#" + idString + "_progress");
 		
 		var thisObject = this;
-		document.getElementById(idString + "_pp").onclick = function(){togglePlaying(this);};
-		document.getElementById(idString + "_sf").onclick = skipForward;
-		document.getElementById(idString + "_sb").onclick = skipBackward;
-		audio.onended = audio.onerror = audio.onstalled = skipForward;
-		audio.ontimeupdate = updateProgress;
+		$("#" + idString + "_pp").on("click",function(){togglePlaying(this)});
+		$("#" + idString + "_sf").on("click",skipForward);
+		$("#" + idString + "_sb").on("click",skipBackward);
+		//document.getElementById(idString + "_pp").onclick = function(){togglePlaying(this);};
+		//document.getElementById(idString + "_sf").onclick = skipForward;
+		//document.getElementById(idString + "_sb").onclick = skipBackward;
+		$(audio).on("ended error stalled",skipForward);
+		$(audio).on("timeupdate",updateProgress);
+		//audio.onended = audio.onerror = audio.onstalled = skipForward;
+		//audio.ontimeupdate = updateProgress;
 		
 		isInitialised = true;
 	}
-	
+
 	function updateProgress(){
-		var completeWidth = progressDiv.offsetWidth;
-		var currentTime = Math.round((audio.currentTime * completeWidth) / audio.duration);
+		var completeWidth = progressDiv.width();
+		var duration = playlist[currentTrackIndex].duration ? playlist[currentTrackIndex].duration : audio.duration;
+		var currentTime = Math.round((audio.currentTime * completeWidth) / duration);
 		var remainingTime = completeWidth - currentTime;
-		timeCompleteDiv.setAttribute("style","width:" + currentTime + "px");
-		timeRemainingDiv.setAttribute("style","width:" + remainingTime + "px");
+
+		timeCompleteDiv.width(currentTime + "px");
+		timeRemainingDiv.width(remainingTime + "px");
 	}
 	
 	function togglePlaying(button){

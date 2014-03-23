@@ -25,6 +25,6 @@
 <script>
 	var player = new MusicPlayer();
 	<% @album.tracks.each {|track| %>
-		player.addToPlaylist({title: "<%= track.title %>", src: "<%= stream_url track %>"});
+		player.addToPlaylist({title: "<%= track.title %>", src: "<%= stream_url track %>", duration: <%= track.duration %>});
 	<% } %>
 </script>
