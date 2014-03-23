@@ -1,5 +1,3 @@
-require 'taglib'
-
 class TracksController < ApplicationController
 	def stream
 		@track = Track.find(params[:id])
