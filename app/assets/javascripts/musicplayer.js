@@ -9,6 +9,7 @@ function MusicPlayer(){
 	var timeCompleteDiv = null;
 	var timeRemainingDiv = null;
 	var progressDiv = null;
+	var playlistContainer = null;
 	
 	this.initialise = function(){
 		if (isInitialised){return;}
@@ -16,27 +17,26 @@ function MusicPlayer(){
 		var container = $("#" + idString);
 		if (!container || !window.jQuery){return;}
 		
-		container.append("<div id='musicplayer_progress'><div id='musicplayer_complete'></div><div id='musicplayer_remaining'></div></div><div class='controls clearfix'><div class='button' id='musicplayer_sb'>SkipBackward</div><!--<div class='button' id='musicplayer_rw'>Rewind</div>--><div class='button' id='musicplayer_pp'>Play</div><!--<div class='button' id='musicplayer_ff'>FastForward</div>--><div class='button' id='musicplayer_sf'>SkipForward</div></div>");
+		container.append("<div id='musicplayer_playlist'></div><div id='musicplayer_progress'><div id='musicplayer_complete'></div><div id='musicplayer_remaining'></div></div><div class='controls clearfix'><div class='button first' id='musicplayer_sb' style='background-image:url(/assets/gnome_media_skip_backward.png);background-size:100%;'></div><!--<div class='button' id='musicplayer_rw'>Rewind</div>--><div class='button' id='musicplayer_pp' style='background-image:url(/assets/gnome_media_playback_start.png);background-size:100%;'></div><!--<div class='button' id='musicplayer_ff'>FastForward</div>--><div class='button' id='musicplayer_sf' style='background-image:url(/assets/gnome_media_skip_forward.png);background-size:100%;'></div></div>");
 	
 		audio = new Audio();
 		audio.controls = false;
 		container.append(audio);
+		audio.onended = skipForward;
+		audio.onerror = function(){skipForward;};
+		audio.onstalled = function(){skipForward;};
 		
 		timeCompleteDiv = $("#" + idString + "_complete");
 		timeRemainingDiv = $("#" + idString + "_remaining");
 		progressDiv = $("#" + idString + "_progress");
+		playlistContainer = $("#" + idString + "_playlist");
 		
 		var thisObject = this;
 		$("#" + idString + "_pp").on("click",function(){togglePlaying(this)});
 		$("#" + idString + "_sf").on("click",skipForward);
 		$("#" + idString + "_sb").on("click",skipBackward);
-		//document.getElementById(idString + "_pp").onclick = function(){togglePlaying(this);};
-		//document.getElementById(idString + "_sf").onclick = skipForward;
-		//document.getElementById(idString + "_sb").onclick = skipBackward;
-		$(audio).on("ended error stalled",skipForward);
+
 		$(audio).on("timeupdate",updateProgress);
-		//audio.onended = audio.onerror = audio.onstalled = skipForward;
-		//audio.ontimeupdate = updateProgress;
 		
 		isInitialised = true;
 	}
@@ -49,6 +49,12 @@ function MusicPlayer(){
 
 		timeCompleteDiv.width(currentTime + "px");
 		timeRemainingDiv.width(remainingTime + "px");
+
+		if (currentTime > completeWidth)
+		{
+			audio.pause();
+			skipForward();
+		}
 	}
 	
 	function togglePlaying(button){
@@ -56,13 +62,13 @@ function MusicPlayer(){
 		{
 			audio.pause();
 			isPlaying = false;
-			button.innerHTML = "Play";
+			$(button).css("background-image","url(/assets/gnome_media_playback_start.png)");
 		}
 		else
 		{
-			audio.play();
 			isPlaying = true;
-			button.innerHTML = "Pause";
+			$(button).css("background-image","url(/assets/gnome_media_playback_pause.png)");
+			moveToCurrentIndex();
 		}
 	}
 	this.togglePlaying = togglePlaying;
@@ -84,9 +90,11 @@ function MusicPlayer(){
 	this.skipBackward = skipBackward;
 	
 	function moveToCurrentIndex(){
-		audio.src = playlist[currentTrackIndex].src;
-		audio.load;
+		var currentId = "#musicplayer_" + currentTrackIndex;
+		$(".playlist_item").not(currentId).slideUp();
+		$(currentId).slideDown();
 		if (isPlaying){
+			audio.src = playlist[currentTrackIndex].src;
 			audio.play();
 		}
 	}
@@ -97,16 +105,17 @@ function MusicPlayer(){
 		if (track instanceof Array){
 			for (var i = 0; i < track.length; i++){
 				playlist.push(track[i]);
+				playlistContainer.append("<div id='musicplayer_" + (playlist.length-1) + "' class='playlist_item'><div class='playlist_inner'>" + track.title + "</div></div>");
 			}
 		}
 		else{
 			playlist.push(track);
+				playlistContainer.append("<div id='musicplayer_" + (playlist.length-1) + "' class='playlist_item'><div class='playlist_inner'>" + track.title + "</div></div>");
 		}
 		
 		if (load){
-			audio.src = track.src;
-			audio.load();
 			currentTrackIndex = 0;
+			moveToCurrentIndex();
 		}
 	};
 	

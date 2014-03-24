@@ -12,7 +12,8 @@
 
 <p>
 	<strong>Tracks:</strong><br/>
-	<% @album.tracks.each {|track| %>
+	<% sorted_tracks = @album.tracks.sort {|x,y| x.track_no <=> y.track_no} %>
+	<% sorted_tracks.each {|track| %>
 		<%= link_to track.title,track %><br/>
 	<% } %>
 </p>
@@ -24,7 +25,7 @@
 
 <script>
 	var player = new MusicPlayer();
-	<% @album.tracks.each {|track| %>
+	<% sorted_tracks.each {|track| %>
 		player.addToPlaylist({title: "<%= track.title %>", src: "<%= stream_url track %>", duration: <%= track.duration %>});
 	<% } %>
 </script>
