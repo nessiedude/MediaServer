@@ -1,4 +1,4 @@
-<div id='musicplayer'></div>
+<div id='musicplayer' class='centre'></div>
 
 <p>
 	<strong>Title:</strong>
@@ -23,9 +23,4 @@
 <%= link_to 'Artists', artists_path %><br/>
 <%= link_to 'Albums', albums_path %>
 
-<script>
-	var player = new MusicPlayer();
-	<% sorted_tracks.each {|track| %>
-		player.addToPlaylist({title: "<%= track.title %>", src: "<%= stream_url track %>", duration: <%= track.duration %>});
-	<% } %>
-</script>
+<%= TracksHelper.musicplayer_script(sorted_tracks) %>

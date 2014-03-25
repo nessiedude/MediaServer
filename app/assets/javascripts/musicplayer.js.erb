@@ -10,6 +10,8 @@ function MusicPlayer(){
 	var timeRemainingDiv = null;
 	var progressDiv = null;
 	var playlistContainer = null;
+	var playImgSrc = "<%=image_path("play.png")%>";
+	var pauseImgSrc = "<%=image_path("pause.png")%>";
 	
 	this.initialise = function(){
 		if (isInitialised){return;}
@@ -17,7 +19,7 @@ function MusicPlayer(){
 		var container = $("#" + idString);
 		if (!container || !window.jQuery){return;}
 		
-		container.append("<div id='musicplayer_playlist'></div><div id='musicplayer_progress'><div id='musicplayer_complete'></div><div id='musicplayer_remaining'></div></div><div class='controls clearfix'><div class='button first' id='musicplayer_sb' style='background-image:url(/assets/gnome_media_skip_backward.png);background-size:100%;'></div><!--<div class='button' id='musicplayer_rw'>Rewind</div>--><div class='button' id='musicplayer_pp' style='background-image:url(/assets/gnome_media_playback_start.png);background-size:100%;'></div><!--<div class='button' id='musicplayer_ff'>FastForward</div>--><div class='button' id='musicplayer_sf' style='background-image:url(/assets/gnome_media_skip_forward.png);background-size:100%;'></div></div>");
+		container.append("<div id='musicplayer_playlist'></div><div id='musicplayer_progress'><div id='musicplayer_complete'></div><div id='musicplayer_remaining'></div></div><div class='controls clearfix'><div class='button first' id='musicplayer_sb' style='background-image:url(<%=image_path("skip_backward.png")%>);background-size:100%;'></div><!--<div class='button' id='musicplayer_rw'>Rewind</div>--><div class='button' id='musicplayer_pp' style='background-image:url(" + playImgSrc + ");background-size:100%;'></div><!--<div class='button' id='musicplayer_ff'>FastForward</div>--><div class='button' id='musicplayer_sf' style='background-image:url(<%=image_path("skip_forward.png")%>);background-size:100%;'></div></div>");
 	
 		audio = new Audio();
 		audio.controls = false;
@@ -62,12 +64,12 @@ function MusicPlayer(){
 		{
 			audio.pause();
 			isPlaying = false;
-			$(button).css("background-image","url(/assets/gnome_media_playback_start.png)");
+			$(button).css("background-image","url(" + playImgSrc + ")");
 		}
 		else
 		{
 			isPlaying = true;
-			$(button).css("background-image","url(/assets/gnome_media_playback_pause.png)");
+			$(button).css("background-image","url(" + pauseImgSrc + ")");
 			moveToCurrentIndex();
 		}
 	}
